@@ -8,7 +8,13 @@
     </head>
     <body>
         <script type="text/javascript">
-	        var dataset = [ 5, 10, 15, 20, 25 ];
+	        var dataset = [];                        //Initialize empty array
+			for (var i = 0; i < 25; i++) {           //Loop 25 times
+			    var newNumber = Math.round(Math.random() * 30);  //New random number (0-30)
+			    dataset.push(newNumber);             //Add new number to array
+			}
+
+
 	    	d3.select("body").selectAll("div")
 				.data(dataset)
 			    .enter()
@@ -19,5 +25,21 @@
 				    return barHeight + "px";
 				});
         </script>
+        <p>Here is SVG stuff?</p>
+        <svg width="500" height="50">
+        	<!-- <rect x="0" y="0" width="500" height="50"/> -->
+        	<!-- <circle cx="250" cy="25" r="25"/> -->
+        	<!-- <ellipse cx="250" cy="25" rx="100" ry="25"/> -->
+        	<!-- <line x1="0" y1="0" x2="500" y2="50" stroke="black"/> -->
+			<text x="250" y="25" font-family="sans-serif"  font-size="25" fill="gray">Easy-peasy</text>
+			<circle cx="25" cy="25" r="20" fill="purple" 
+			        stroke="green" stroke-width="10"
+			        opacity="0.9"/>
+			<circle cx="65" cy="25" r="20" fill="green"
+			        stroke="blue" stroke-width="10"
+			        opacity="0.5"/>
+			<circle cx="105" cy="25" r="20" fill="yellow"
+			        stroke="red" stroke-width="10"
+			        opacity="0.1"/>
     </body>
 </html>
