@@ -7,6 +7,107 @@
         <script type="text/javascript" src="d3/d3.v3.js"></script>
     </head>
     <body>
+    	<p>my new thing! let's make a line graph!</p>
+
+
+    	<script type="text/javascript">
+			//Dynamic, random dataset
+			var dataset = [
+				[ 1,  3 ],
+				[ 2,  5 ],
+				[ 3,  10],
+				[ 4,  8 ],
+			];
+			// var numDataPoints = 5;
+			// var xRange = Math.random() * 20;
+			// var yRange = Math.random();
+			// for (var i = 0; i < numDataPoints; i++) {
+			//     var newNumber1 = Math.round(Math.random() * xRange);
+			//     var newNumber2 = Math.round(Math.random() * yRange *100)/100;
+			//     dataset.push([newNumber1, newNumber2]);
+			// }
+
+			var w = 500;
+			var h = 300;
+
+			var padding = 20;
+
+			//making a scale!
+			var xScale = d3.scale.linear()
+                 .domain([0, d3.max(dataset, function(d) { return d[0]; })])
+                 .range([2*padding, w-padding*3]);
+            var yScale = d3.scale.linear()
+                 .domain([0, d3.max(dataset, function(d) { return d[1]; })])
+                 .range([h-padding, padding]);
+
+            //Create SVG element
+			var svg = d3.select("body")
+	            .append("svg")
+	            .attr("width", w)
+	            .attr("height", h);
+
+	        // make a circle for each data point
+	        svg.selectAll("circle")
+			   .data(dataset)
+			   .enter()
+			   .append("circle")
+			   .attr("cx", function(d) {
+			        return xScale(d[0]);
+			   })
+			   .attr("cy", function(d) {
+			        return yScale(d[1]);
+			   })
+			   .attr("r",2);
+
+			 //make a line for each data pair			
+			svg.selectAll("line")
+			 	.data(dataset)
+			 	.enter()
+			 	.append("line");
+
+
+     //        var lineFunc = d3.svg.line()
+			  // .x(function(d) {
+			  //   return xScale(d[0]);
+			  // })
+			  // .y(function(d) {
+			  //   return yScale(d[1]);
+			  // })
+			  // .interpolate('linear');
+
+			  // var g = svg.append("path")
+			  // 			 .attr(lineFunc(dataset))
+			  // 			 .attr("stroke", "blue")
+     //                     .attr("stroke-width", 2)
+     //                     .attr("fill", "none");
+
+
+var lineData = [ { "x": 1,   "y": 5},  { "x": 20,  "y": 20},
+                 { "x": 40,  "y": 10}, { "x": 60,  "y": 40},
+                 { "x": 80,  "y": 5},  { "x": 100, "y": 60}];
+ //This is the accessor function we talked about above
+ var lineFunction = d3.svg.line()
+                          .x(function(d) { return d.x; })
+                          .y(function(d) { return d.y; })
+                          .interpolate("linear");
+
+//The SVG Container
+var svgContainer = d3.select("body").append("svg")
+                                    .attr("width", 200)
+                                    .attr("height", 200);
+
+//The line SVG Path we draw
+var lineGraph = svgContainer.append("path")
+                            .attr("d", lineFunction(lineData))
+                            .attr("stroke", "blue")
+                            .attr("stroke-width", 2)
+                            .attr("fill", "none");
+
+
+
+    	</script>
+
+    	<p>tutorial stuff</p>
         <script type="text/javascript">
 	        var dataset = [];                        //Initialize empty array
 			for (var i = 0; i < 25; i++) {           //Loop 25 times
@@ -125,27 +226,25 @@
 			   .attr("fill", "white")
 			   .attr("text-anchor", "middle");
 
-			// create scatterplot
-			var dataset = [
-                  [ 5,     20 ],
-                  [ 480,   90 ],
-                  [ 250,   50 ],
-                  [ 100,   33 ],
-                  [ 330,   95 ],
-                  [ 410,   12 ],
-                  [ 475,   44 ],
-                  [ 25,    67 ],
-                  [ 85,    21 ],
-                  [ 220,   88 ],
-                  [ 600,   150 ]
-              ];
+			//Scatterplot
+
+			//Dynamic, random dataset
+			var dataset = [];
+			var numDataPoints = 50;
+			var xRange = Math.random() * 1000;
+			var yRange = Math.random() * 1000;
+			for (var i = 0; i < numDataPoints; i++) {
+			    var newNumber1 = Math.round(Math.random() * xRange);
+			    var newNumber2 = Math.round(Math.random() * yRange);
+			    dataset.push([newNumber1, newNumber2]);
+			}
 
             var padding = 20;
 
 			//making a scale!
 			var xScale = d3.scale.linear()
                  .domain([0, d3.max(dataset, function(d) { return d[0]; })])
-                 .range([padding, w-padding*2]);
+                 .range([2*padding, w-padding*3]);
             var yScale = d3.scale.linear()
                  .domain([0, d3.max(dataset, function(d) { return d[1]; })])
                  .range([h-padding, padding]);
@@ -172,26 +271,58 @@
 			   .attr("r", function(d){
 			   		return rScale(d[1]);
 			   });
-			svg.selectAll("text")
-			   .data(dataset)
-			   .enter()
-			   .append("text")
-			   .text(function(d) {
-			        return d[0] + "," + d[1];
-			   })
-			   .text(function(d) {
-			        return d[0] + "," + d[1];
-			   })
-			   .attr("x", function(d){
-			   		return xScale(d[0]);
-			   })
-			   .attr("y", function(d){
-			   		return yScale(d[1]);
-			   })
-			   .attr("font-family", "sans-serif")
-			   .attr("font-size", "11px")
-			   .attr("fill", "red");
+			// svg.selectAll("text")
+			//    .data(dataset)
+			//    .enter()
+			//    .append("text")
+			//    .text(function(d) {
+			//         return d[0] + "," + d[1];
+			//    })
+			//    .text(function(d) {
+			//         return d[0] + "," + d[1];
+			//    })
+			//    .attr("x", function(d){
+			//    		return xScale(d[0]);
+			//    })
+			//    .attr("y", function(d){
+			//    		return yScale(d[1]);
+			//    })
+			//    .attr("font-family", "sans-serif")
+			//    .attr("font-size", "11px")
+			//    .attr("fill", "red");
 
+			var xAxis = d3.svg.axis()
+				.scale(xScale)
+				.orient("bottom")
+				.ticks(5);  //Set rough # of ticks
+
+            var formatAsPercentage = d3.format(".1%");
+
+            xAxis.tickFormat(formatAsPercentage);
+
+			svg.append("g")
+				.attr("class", "axis")  //Assign "axis" class
+				.attr("transform", "translate(0," + (h - padding) + ")")
+    			.call(xAxis);
+            
+
+    		//Define Y axis
+			var yAxis = d3.svg.axis()
+                .scale(yScale)
+                .orient("left")
+                .ticks(5);
+
+            //Create Y axis
+			svg.append("g")
+			    .attr("class", "axis")
+			    .attr("transform", "translate(" + 2*padding + ",0)")
+			    .call(yAxis);
+
+			//Define Y axis
+			var yAxis = d3.svg.axis()
+	            .scale(yScale)
+                .orient("left")
+                .ticks(5);
 
 		</script>
     </body>
